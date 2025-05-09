@@ -21,16 +21,14 @@ public:
 	void getPosicionsPossibles(const Posicio& origen, int& nPosicions, Posicio posicionsPossibles[]);
 	bool mouFitxa(const Posicio& origen, const Posicio& desti);
 	string toString() const;
+	void fitxesEliminades(const Posicio& origen, const Posicio& desti);
 private:
 	Fitxa m_tauler[N_FILES][N_COLUMNES];
 	int m_numFitxesBlanc;
 	int m_numFitxesNegre;
 	bool m_torn;
-};
-
-
-#endif 
-
+}; 
+#endif // TAULER_H
 
 Tauler::Tauler()
 {
@@ -67,7 +65,6 @@ Tauler::Tauler()
 	m_numFitxesNegre = 12;
 	m_torn = true; // Blanc comença
 }
-//FOR
 Tauler::~Tauler()
 {
 
@@ -160,8 +157,6 @@ void Tauler::inicialitza(const string& nomFitxer)
 	fitxer.close();
 }
 
-
-
 void Tauler::actualitzaMovimentsValids()
 {
 	if (m_torn)
@@ -206,6 +201,7 @@ void Tauler::actualitzaMovimentsValids()
 
 bool Tauler::mouFitxa(const Posicio& origen, const Posicio& desti)
 {
+	actualitzaMovimentsValids();
 	int filaOrigen = origen.getFila();
 	int columnaOrigen = origen.getColumna();
 	int filaDesti = desti.getFila();
@@ -258,6 +254,8 @@ string Tauler::toString() const
 		}
 }
 
+
+
 void Tauler::getPosicionsPossibles(const Posicio& origen, int& nPosicions, Posicio posicionsPossibles[])
 {
 	nPosicions = 0;
@@ -290,11 +288,12 @@ void Tauler::getPosicionsPossibles(const Posicio& origen, int& nPosicions, Posic
 			nPosicions++;
 		}
 
-		if (m_tauler[fila + 2][columna - 2].getTipus() == TIPUS_EMPTY && m_tauler[fila + 1][columna - 1].getTipus() != TIPUS_EMPTY && m_tauler[fila + 1][columna -1].getColor())
+		if (m_tauler[fila + 2][columna - 2].getTipus() == TIPUS_EMPTY && m_tauler[fila + 1][columna - 1].getTipus() != TIPUS_EMPTY)
 		{
 			posicionsPossibles[nPosicions] = Posicio(fila + 2, columna - 2);
 			nPosicions++;
 			getPosicionsPossibles(Posicio(fila + 2, columna - 2), nPosicions, posicionsPossibles);
+
 		}
 		if (m_tauler[fila + 2][columna + 2].getTipus() == TIPUS_EMPTY && m_tauler[fila + 1][columna + 1].getTipus() != TIPUS_EMPTY)
 		{
@@ -343,7 +342,7 @@ void Tauler::getPosicionsPossibles(const Posicio& origen, int& nPosicions, Posic
 			}
 			
 		}
-		else
+		else// Afegir moviments possibles per a la fitxa negra
 		{
 			if (m_tauler[fila - 1][columna - 1].getTipus() == TIPUS_EMPTY)
 			{
@@ -358,7 +357,9 @@ void Tauler::getPosicionsPossibles(const Posicio& origen, int& nPosicions, Posic
 			if (m_tauler[fila - 2][columna - 2].getTipus() == TIPUS_EMPTY && m_tauler[fila - 1][columna - 1].getTipus() != TIPUS_EMPTY && m_tauler[fila + 1][columna - 1].getColor() == COLOR_BLANC)
 			{
 				posicionsPossibles[nPosicions] = Posicio(fila - 2, columna - 2);
+				fitxesEliminades(origen,posicionsPossibles[nPosicions]);
 				nPosicions++;
+				
 				getPosicionsPossibles(Posicio(fila - 2, columna - 2), nPosicions, posicionsPossibles);
 			}
 			if (m_tauler[fila - 2][columna + 2].getTipus() == TIPUS_EMPTY && m_tauler[fila - 1][columna + 1].getTipus() != TIPUS_EMPTY && m_tauler[fila + 1][columna - 1].getColor() == COLOR_BLANC)
@@ -368,8 +369,10 @@ void Tauler::getPosicionsPossibles(const Posicio& origen, int& nPosicions, Posic
 				getPosicionsPossibles(Posicio(fila - 2, columna + 2), nPosicions, posicionsPossibles);
 			}
 		}
-		
 	}
+}
 
-
+void Tauler::fitxesEliminades(const Posicio& origen, const Posicio& desti)
+{
+	   
 }
