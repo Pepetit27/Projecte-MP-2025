@@ -1,10 +1,10 @@
 #include "Posicio.h"
 
+
 Posicio::Posicio()
 {
 	m_fila = 0;
 	m_columna = 0;
-
 }
 
 Posicio::Posicio(int fila, int columna)
@@ -38,11 +38,21 @@ void Posicio::setColumna(int columna)
 {
 	m_columna = columna;
 }
-/*
+
 bool Posicio::operator==(const Posicio& posicio) const
 {
 	return (m_fila == posicio.m_fila && m_columna == posicio.m_columna);
 }
+
+ostream& operator<<(ostream& os, const Posicio& posicio)
+{
+	os << "(" << posicio.getFila() << ", " << posicio.getColumna() << ")";
+	return os;
+	// TODO: insert return statement here
+}
+
+
+/*
 bool Posicio::operator!=(const Posicio& posicio) const
 {
 	return (m_fila != posicio.m_fila || m_columna != posicio.m_columna);

@@ -17,6 +17,5 @@ public:
 private:
 	Posicio m_origen;
 	Posicio m_desti;
-	bool m_valid;
 };
 

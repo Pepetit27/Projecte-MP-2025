@@ -10,10 +10,7 @@ const Posicio& Moviment::getDesti() const
 	return m_desti;
 }
 
-bool Moviment::esValid() const
-{
-	return m_valid;
-}
+
 
 void Moviment::setOrigen(const Posicio& origen)
 {
@@ -25,30 +22,24 @@ void Moviment::setDesti(const Posicio& desti)
 	m_desti = desti;
 }
 
-void Moviment::setValid(bool valid)
-{
-	m_valid = valid;
-}
+
 
 Moviment::Moviment()
 {
 	m_origen = Posicio();
 	m_desti = Posicio();
-	m_valid = false;
 }
 
 Moviment::Moviment(const Posicio& origen, const Posicio& desti)
 {
 	m_origen = origen;
 	m_desti = desti;
-	m_valid = true;
 }
 
 Moviment::Moviment(const Moviment& moviment)
 {
 	m_origen = moviment.m_origen;
 	m_desti = moviment.m_desti;
-	m_valid = moviment.m_valid;
 }
 
 Moviment::~Moviment()
@@ -62,7 +53,6 @@ Moviment& Moviment::operator=(const Moviment& moviment)
 	{
 		m_origen = moviment.m_origen;
 		m_desti = moviment.m_desti;
-		m_valid = moviment.m_valid;
 	}
 	return *this;
 }
